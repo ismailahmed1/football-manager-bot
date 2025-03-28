@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Manager AI Bot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Football Manager AI Bot</h1>
+        
+        <div id="manager-selection">
+            <label for="manager-select">Choose Manager</label>
+            <select id="manager-select">
+                <option value="José Mourinho">José Mourinho</option>
+                <option value="Pep Guardiola" selected>Pep Guardiola</option>
+                <option value="Jurgen Klopp">Jurgen Klopp</option>
+            </select>
+        </div>
+        
+        <div id="response-type-selection">
+            <label for="response-type-select">Choose Response Type</label>
+            <select id="response-type-select">
+                <option value="press_conference">Press Conference</option>
+                <option value="team_talk" selected>Team Talk</option>
+                <option value="tactical_analysis">Tactical Analysis</option>
+            </select>
+        </div>
+
+        <div id="chat-container">
+            <div id="chat-box">
+                <!-- Chat messages will appear here -->
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="user-message" placeholder="Ask a football question...">
+                <button id="send-message">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
