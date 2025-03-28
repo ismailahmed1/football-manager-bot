@@ -105,3 +105,16 @@ select {
         padding: 10px;
     }
 }
+
+.manager-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#manager-image {
+    object-fit: cover;
+    border: 3px solid #4CAF50;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
