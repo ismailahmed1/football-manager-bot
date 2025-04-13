@@ -16,6 +16,7 @@ body {
 .app-container {
     display: flex;
     min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
 }
 
 /* Manager specific styles */
@@ -49,12 +50,14 @@ body {
 
 .side-panel.left-panel {
     background-color: var(--manager-color, #1a237e);
+    border-radius: 0 0 30px 0;
 }
 
 .side-panel.right-panel {
     background-color: var(--manager-color, #1a237e);
     display: flex;
     align-items: flex-start;
+    border-radius: 0 0 0 30px;
 }
 
 .side-panel::before {
@@ -134,16 +137,19 @@ body {
 .main-content {
     width: 50%;
     padding: 2rem;
-    background-color: white;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background-color: transparent;
     position: relative;
     min-height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding-bottom: 1rem;
+    width: 100%;
 }
 
 h1 {
@@ -155,16 +161,24 @@ h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     background: var(--manager-gradient, linear-gradient(45deg, rgba(26, 35, 126, 0.9), rgba(26, 35, 126, 0.7)));
     padding: 1.5rem;
-    border-radius: 12px;
+    border-radius: 30px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transform: translateY(-20px);
     transition: all 0.3s ease;
+    position: relative;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    width: 100%;
 }
 
 /* Form elements */
 #manager-selection,
 #response-type-selection {
     margin-bottom: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 label {
@@ -177,36 +191,41 @@ label {
 select {
     width: 100%;
     padding: 0.75rem;
-    border: 2px solid #ddd;
+    border: 2px solid rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     background-color: white;
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 select:focus {
     outline: none;
     border-color: var(--manager-color, #1a237e);
+    box-shadow: 0 0 0 3px rgba(26, 35, 126, 0.1);
 }
 
 /* Chat container */
 #chat-container {
-    background-color: #f8f9fa;
-    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
     padding: 1.5rem;
     height: 60vh;
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
     position: relative;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 100%;
 }
 
 #chat-box {
     flex-grow: 1;
     overflow-y: auto;
     padding: 1rem;
-    background-color: white;
-    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
     margin-bottom: 0.5rem;
     display: flex;
     flex-direction: column;
@@ -325,11 +344,13 @@ select:focus {
 .input-container {
     display: flex;
     gap: 1rem;
-    padding: 0.5rem;
-    background-color: white;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
+    padding: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     margin-top: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    width: 100%;
 }
 
 input[type="text"] {
@@ -407,6 +428,7 @@ button:hover {
     .side-panel {
         width: 100%;
         padding: 1rem;
+        border-radius: 0;
     }
     .main-content {
         width: 100%;
