@@ -3,43 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Football Manager AI Bot</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Carlo - Football Manager AI Bot</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>Football Manager AI Bot</h1>
-        
-        <div id="manager-selection">
-            <label for="manager-select">Choose Manager</label>
-            <select id="manager-select">
-                <option value="José Mourinho">José Mourinho</option>
-                <option value="Pep Guardiola" selected>Pep Guardiola</option>
-                <option value="Jurgen Klopp">Jurgen Klopp</option>
-            </select>
-        </div>
-        
-        <div id="response-type-selection">
-            <label for="response-type-select">Choose Response Type</label>
-            <select id="response-type-select">
-                <option value="press_conference">Press Conference</option>
-                <option value="team_talk" selected>Team Talk</option>
-                <option value="tactical_analysis">Tactical Analysis</option>
-            </select>
-        </div>
-
-        <div id="chat-container">
-            <div id="chat-box">
-                <!-- Chat messages will appear here -->
+    <div class="app-container">
+        <div class="side-panel left-panel">
+            <div class="manager-images">
+                <div class="manager-image" data-manager="José Mourinho">
+                    <img src="{{ url_for('static', filename='images/mourinho1.jpg') }}" alt="José Mourinho">
+                    <div class="manager-name">José Mourinho</div>
+                </div>
+                <div class="manager-image" data-manager="Pep Guardiola">
+                    <img src="{{ url_for('static', filename='images/guardiola1.jpg') }}" alt="Pep Guardiola">
+                    <div class="manager-name">Pep Guardiola</div>
+                </div>
+                <div class="manager-image" data-manager="Jurgen Klopp">
+                    <img src="{{ url_for('static', filename='images/klopp1.jpg') }}" alt="Jurgen Klopp">
+                    <div class="manager-name">Jurgen Klopp</div>
+                </div>
             </div>
-            <div style="display: flex; gap: 10px;">
-                <input type="text" id="user-message" placeholder="Ask a football question...">
-                <button id="send-message">Send</button>
+        </div>
+        
+        <div class="main-content">
+            <div class="container">
+                <h1>Carlo - Football Manager AI Bot</h1>
+                
+                <div id="manager-selection">
+                    <label for="manager-select">Select Manager:</label>
+                    <select id="manager-select">
+                        <option value="">Select a manager</option>
+                    </select>
+                </div>
+                
+                <div id="response-type-selection">
+                    <label for="response-type-select">Response Type:</label>
+                    <select id="response-type-select">
+                        <option value="">Select response type</option>
+                    </select>
+                </div>
+                
+                <div id="chat-container">
+                    <div id="chat-box"></div>
+                    <div class="input-container">
+                        <input type="text" id="user-message" placeholder="Type your message here...">
+                        <button id="send-message">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="side-panel right-panel">
+            <div class="manager-images">
+                <div class="manager-image" data-manager="José Mourinho">
+                    <img src="{{ url_for('static', filename='images/mourinho2.jpg') }}" alt="José Mourinho">
+                    <div class="manager-name">José Mourinho</div>
+                </div>
+                <div class="manager-image" data-manager="Pep Guardiola">
+                    <img src="{{ url_for('static', filename='images/guardiola2.jpg') }}" alt="Pep Guardiola">
+                    <div class="manager-name">Pep Guardiola</div>
+                </div>
+                <div class="manager-image" data-manager="Jurgen Klopp">
+                    <img src="{{ url_for('static', filename='images/klopp2.jpg') }}" alt="Jurgen Klopp">
+                    <div class="manager-name">Jurgen Klopp</div>
+                </div>
             </div>
         </div>
     </div>
-
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>
