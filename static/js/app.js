@@ -2,11 +2,13 @@ let managers = [];
 let currentManager = null;
 let currentResponseType = null;
 let isProcessing = false;
+let chatHistory = [];
 
 // Fetch available managers when page loads
 document.addEventListener('DOMContentLoaded', () => {
     fetchManagers();
     setupEventListeners();
+    loadChatHistory();
 });
 
 function fetchManagers() {
@@ -42,6 +44,7 @@ function setupEventListeners() {
     const responseTypeSelect = document.getElementById('response-type-select');
     const messageInput = document.getElementById('user-message');
     const sendButton = document.getElementById('send-message');
+    const resetButton = document.getElementById('reset-chat');
 
     managerSelect.addEventListener('change', function() {
         currentManager = this.value;
@@ -63,6 +66,8 @@ function setupEventListeners() {
     });
 
     sendButton.addEventListener('click', sendMessage);
+    
+    resetButton.addEventListener('click', resetChat);
 }
 
 function updateManagerUI(managerName) {
@@ -91,12 +96,7 @@ function updateManagerUI(managerName) {
     });
 
     // Add connection message
-    const chatBox = document.getElementById('chat-box');
-    const connectionMessage = document.createElement('div');
-    connectionMessage.className = 'message connection-message';
-    connectionMessage.textContent = `Connected to ${managerName} through Carlo's exclusive connection!`;
-    chatBox.appendChild(connectionMessage);
-    chatBox.scrollTop = chatBox.scrollHeight;
+    addConnectionMessage(managerName);
 }
 
 function getManagerColor(managerName) {
@@ -218,6 +218,10 @@ function addMessageToChat(sender, content, className) {
     messageDiv.className = `message ${className}`;
     messageDiv.setAttribute('role', 'article');
     
+    if (className === 'bot-message') {
+        messageDiv.setAttribute('data-manager', sender);
+    }
+    
     // Create message header with avatar
     const header = document.createElement('div');
     header.className = 'message-header';
@@ -243,13 +247,30 @@ function addMessageToChat(sender, content, className) {
     
     const messageContent = document.createElement('div');
     messageContent.className = 'message-content';
-    messageContent.textContent = content;
+    
+    // Convert markdown to HTML
+    let formattedContent = content
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+        .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italic
+        .replace(/\n/g, '<br>'); // Line breaks
+    
+    messageContent.innerHTML = formattedContent;
     
     // Clear existing content and append in correct order
     messageDiv.innerHTML = '';
     messageDiv.appendChild(header);
     messageDiv.appendChild(messageContent);
     chatBox.appendChild(messageDiv);
+    
+    // Save to history
+    chatHistory.push({
+        type: 'message',
+        sender: sender,
+        content: content,
+        className: className,
+        timestamp: new Date().toISOString()
+    });
+    saveChatHistory();
     
     // Scroll to bottom
     chatBox.scrollTop = chatBox.scrollHeight;
@@ -274,4 +295,62 @@ function showError(message) {
     
     // Scroll to bottom
     chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function loadChatHistory() {
+    const savedHistory = localStorage.getItem('chatHistory');
+    if (savedHistory) {
+        chatHistory = JSON.parse(savedHistory);
+        renderChatHistory();
+    }
+}
+
+function saveChatHistory() {
+    localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+}
+
+function renderChatHistory() {
+    const chatBox = document.getElementById('chat-box');
+    chatBox.innerHTML = '';
+    
+    chatHistory.forEach(entry => {
+        if (entry.type === 'connection') {
+            addConnectionMessage(entry.manager);
+        } else {
+            addMessageToChat(entry.sender, entry.content, entry.className);
+        }
+    });
+    
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function addConnectionMessage(managerName) {
+    const chatBox = document.getElementById('chat-box');
+    const connectionMessage = document.createElement('div');
+    connectionMessage.className = 'message connection-message';
+    connectionMessage.textContent = `Connected to ${managerName} through Sewy's exclusive connection!`;
+    chatBox.appendChild(connectionMessage);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    
+    // Save to history
+    chatHistory.push({
+        type: 'connection',
+        manager: managerName,
+        timestamp: new Date().toISOString()
+    });
+    saveChatHistory();
+}
+
+function resetChat() {
+    if (confirm('Are you sure you want to reset the chat? This will clear all messages.')) {
+        chatHistory = [];
+        saveChatHistory();
+        const chatBox = document.getElementById('chat-box');
+        chatBox.innerHTML = '';
+        
+        // Add a fresh connection message if there's a current manager
+        if (currentManager) {
+            addConnectionMessage(currentManager);
+        }
+    }
 }
